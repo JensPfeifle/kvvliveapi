@@ -103,8 +103,7 @@ class Departure:
         return Departure(json["route"], json["destination"], json["direction"], time, json["lowfloor"], json["realtime"], json["traction"], json["stopPosition"])
 
     def pretty_format(self, alwaysrelative=False):
-        return self.pretty_time(self, alwaysrelative)
-        + self.route + " " + self.destination #TODO check
+        return self.pretty_time(alwaysrelative) + self.route + " " + self.destination #TODO check
 
     def pretty_time(self, alwaysrelative=False):
         if alwaysrelative and self.timestr != "sofort":

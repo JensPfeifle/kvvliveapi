@@ -19,4 +19,5 @@ def server_static(filename):
 
 #debug(True)
 #run(reloader=True)
-run(app, host='0.0.0.0', port=8080)
+run(app, host='0.0.0.0'
+              '', port=8080)
