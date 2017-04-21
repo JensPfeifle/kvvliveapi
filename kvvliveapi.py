@@ -39,6 +39,34 @@ class Departure:
         self.traction = traction
         self.time = self._str_to_time(time)
         self.stopPosition = stopPosition
+        self.route_color = self.assign_color(route)
+
+    def assign_color(self, route):
+        try:
+            return {
+                '1': "f14948",
+                '2': "0071bc",
+                '3': "947139",
+                '4': "ffcb04",
+                '5': "00c0f3",
+                '6': "80c342",
+                '7': "000000",
+                '8': "f7931d",
+                '9': "000000",
+                'S1': "00a76d",
+                'S2': "a066aa",
+                'S3': "ffe017",
+                # 'S33': "0x8d5ca6",
+                'S4': "9f184c",
+                'S5': "f69795",
+                'S6': "282268",
+                'S7': "fff200",
+                'S8': "6e692a",
+                'S9': "fab49b",
+
+            }[str(route)[:2].strip('Ee')]
+        except KeyError:
+            return "000000"
 
     def _str_to_time(self, timestr):
         """ _str_to_time converts a time string as given in the API response to da datetime.datetime """
@@ -75,18 +103,22 @@ class Departure:
         return Departure(json["route"], json["destination"], json["direction"], time, json["lowfloor"], json["realtime"], json["traction"], json["stopPosition"])
 
     def pretty_format(self, alwaysrelative=False):
+        return self.pretty_time(self, alwaysrelative)
+        + self.route + " " + self.destination #TODO check
+
+    def pretty_time(self, alwaysrelative=False):
         if alwaysrelative and self.timestr != "sofort":
             mins = int((self.time - datetime.now()).total_seconds() / 60)
             timestr = "{:>3} min".format(mins)
         else:
             timestr = self.timestr
-        return timestr + ("  " if self.realtime else "* ") + (" " if timestr != "sofort" else "") + self.route + " " + self.destination
+        return timestr + ("  " if self.realtime else "* ") + (
+        " " if timestr != "sofort" else "")
 
 
 def _query(path, params = {}):
     params["key"] = API_KEY
     url = API_BASE + path + "?" + urlencode(params)
-    #print(url)
     req = _urllib.Request(url)
 
     #try:
