@@ -4,6 +4,7 @@
 </head>
 <meta http-equiv="refresh" content="30" >
 <body style="background-color:black;color:white">
+<h1>Abfahrtszeiten Karlsruhe Tullastraße / VBK</h1>
 <table border="0" rules="rows" cellspacing="10px" width="100%">
 %for row in rows:
   <tr>
