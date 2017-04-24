@@ -8,7 +8,7 @@
 <table border="0" rules="rows" cellspacing="10px" width="100%">
 %for row in rows:
   <tr>
-      <td width="80px">
+      <td width="120px">
           <font color="white" size="+2">{{row.pretty_time()}}</font>
       </td>
       <td class="route" width="40px" align="center">
