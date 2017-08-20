@@ -37,7 +37,6 @@ def kvv_table():
     stationList = kvvliveapi.search_by_stop_id(stationId)
     if len(stationList) == 0:
         return "Station " + str(stationId) + " was not found!"
-
     station = stationList[0]
 
     #get departures
