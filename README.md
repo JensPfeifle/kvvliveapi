@@ -10,4 +10,5 @@ Bisher ist noch nichts dokumentiert, die Haltestelle ist hardcoded und der Code 
 
 Installation
 ============
-sudo pip install bottle
+Bottle installieren:
+    sudo apt-get install python-bottle
