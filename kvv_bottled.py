@@ -44,15 +44,18 @@ def kvv_table():
         #get departures
         departures = kvvliveapi.get_departures(station.stop_id, max_info=maxLines)
         departures = [dep for dep in departures if dep.route != 'E'] #filter out stuff
+        time = datetime.datetime.now().strftime("%H:%M")
 
-        return template('make_table', rows=departures, station=station.name)
+        return template('make_table', time=time, rows=departures, station=station.name)
     except urllib2.HTTPError:
         print("HTTP Error!")
-        return '<html><meta http-equiv="refresh" content="30"></html>'
+        return template('make_table', time=datetime.datetime.now().strftime("%d.%m.%y %H:%M"),
+                        rows=[], station="Error!")
 
 
 @app.route('/static/<filename>')
 def server_static(filename):
     return static_file(filename, root='static/')
 
+debug(True)
 run(app, host='0.0.0.0', port=8080)
