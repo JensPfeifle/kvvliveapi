@@ -47,8 +47,7 @@ def kvv_table():
         time = datetime.datetime.now().strftime("%H:%M")
 
         return template('make_table', time=time, rows=departures, station=station.name)
-    except urllib2.HTTPError:
-        print("HTTP Error!")
+    except:
         return template('make_table', time=datetime.datetime.now().strftime("%d.%m.%y %H:%M"),
                         rows=[], station="Error!")
 
