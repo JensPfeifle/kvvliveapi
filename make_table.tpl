@@ -1,3 +1,4 @@
+<html lang="en">
 <head>
     <title>Abfahrtzeiten {{station}}</title>
     <link rel="stylesheet" type="text/css" href="static/mystyle.css">
@@ -23,3 +24,4 @@
 %end
 </table>
 </body>
+</html>

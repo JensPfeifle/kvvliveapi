@@ -1,3 +1,4 @@
+<html lang="en">
 <head>
     <title>Stationssuche</title>
     <link rel="stylesheet" type="text/css" href="static/mystyle.css">
@@ -32,3 +33,4 @@
 </table>
 %end
 </body>
+</html>
