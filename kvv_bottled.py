@@ -1,8 +1,6 @@
-import sqlite3
 import kvvliveapi
 import datetime
 from bottle import Bottle, route, run, debug, template, static_file, request
-import urllib2
 
 app = Bottle()
 
