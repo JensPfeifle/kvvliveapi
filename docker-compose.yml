@@ -1,0 +1,19 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+     - "8088:8088"
+    environment:
+      - VIRTUAL_HOST=kvv.pcaroli.de
+      - VIRTUAL_NETWORK=nginx-proxy
+      - VIRTUAL_PORT=8088
+      - LETSENCRYPT_HOST=kvv.pcaroli.de
+      - LETSENCRYPT_EMAIL=philip@caroli.de
+networks:
+  default:
+    external:
+      name: webproxy
+
+
+
