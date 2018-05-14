@@ -5,32 +5,20 @@ Zeigt die Abfahrtszeiten von KVV-Straßenbahnen an.
 
 ## Installation (Linux/Ubuntu)
 * Git-Verzeichnis herunterladen: `git clone https://github.com/fablab-ka/kvvliveapi.git`
+* Nginx Companion installieren
 * Bottle installieren: `sudo apt-get install python-bottle`
-* `./run.sh` oder `python kvv_bottled.py` ausführen.
+* `python app.py` ausführen.
 * Webbrowser öffnen und 127.0.0.1:8080 eingeben.
 * Nach Stationsnamen suchen
 * Auf den Link neben dem Namen klicken
 * Nicht mehr die Bahn verpassen
 
-### Dauerhafte Installation mit systemd
-* Systemd-Service anlegen, zB `sudo nano /etc/systemd/system/kvv_table.service`
-```bash
-[Unit]
-Description=KVV Live Information on 0.0.0.0:8080/kvv_table
-After=network.target
+## Installation (Docker)
+* docker-compose installieren
+* Git-Verzeichnis herunterladen: `git clone https://github.com/fablab-ka/kvvliveapi.git`
+* nginx/letsencrypt Comapion laden und konfigurieren: https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion
+* `docker-compose up -d`
 
-[Service]
-Type=simple
-User=root
-WorkingDirectory=/home/fabi/kvvliveapi/
-ExecStart= /home/fabi/kvvliveapi/run.sh
-
-[Install]
-WantedBy=multi-user.target
-```
-
-* Testen mit `systemctl start kvv_table.service`
-* Autostart des Services mit `systemctl enable kvv_table.service`
 #### Einrichten eines KVV-Infomonitors mit Chromium
 * Chromium installieren: `sudo apt-get install chromium-browser`
 * Chromium automatisch starten: `nano .config/autostart/Chromium KVV-Info.desktop`
