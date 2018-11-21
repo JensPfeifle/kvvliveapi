@@ -45,7 +45,7 @@ chromium-browser --disable-infobars --kiosk 'http://localhost:8088'
 
 ## Screenshots
 #### Displaying the departure times for Kronenplatz
-[](https://github.com/fJensPfeifle/kvvliveapi/blob/master/docs/kronenplatz.png)
+[](https://github.com/JensPfeifle/kvvliveapi/blob/develop/docs/kronenplatz.png)
 
 
 
