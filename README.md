@@ -1,64 +1,62 @@
 # KVV Abfahrtsmonitor
-forked from https://github.com/fablab-ka/kvvliveapi
-which is based on https://github.com/Nervengift/kvvliveapi
+forked from https://github.com/fablab-ka/kvvliveapi which is based on https://github.com/Nervengift/kvvliveapi
 
-Zeigt die Abfahrtszeiten von KVV-Straßenbahnen an.
+Shows the departure times of KVV-trams. By default, the two stations Kronenplatz (Kaiserstr.) and Kronenplatz (Fritz-Erler-Str.) are watched.
 
-## Installation (Linux/Ubuntu)
-* Git-Verzeichnis herunterladen: `git clone https://github.com/fablab-ka/kvvliveapi.git`
-* Nginx Companion installieren
-* Bottle installieren: `sudo apt-get install python-bottle`
-* `python app.py` ausführen.
-* Webbrowser öffnen und 127.0.0.1:8080 eingeben.
-* Nach Stationsnamen suchen
-* Auf den Link neben dem Namen klicken
-* Nicht mehr die Bahn verpassen
+## Installation (Linux/Ubuntu/Raspbian)
+* Clone: `git clone https://github.com/JensPfeifle/kvvliveapi.git`
+* Install bottle: `python3 -m pip install bottle`
+* Run `python3 app.py`.
+* Point a browser to 127.0.0.1:8088.
+* Never miss your train again (if you need to get on at Kronenplatz...)
 
 ## Installation (Docker)
-* docker-compose installieren
-* Git-Verzeichnis herunterladen: `git clone https://github.com/fablab-ka/kvvliveapi.git`
-* nginx/letsencrypt Comapion laden und konfigurieren: https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion
-* `docker-compose up -d`
+* FIXME
+  
+## Setup a Rapsberry Pi to run in kiosk mode
+* Start with Raspbian or Raspbian Lite
+* Boot up start sudo raspi-config:
+    * Change the user password!
+    * Connect to a network.
+    * Setup "Console Autologin"
+    * (Enable SSH access)
+    * Disable "Overscan" if the graphics don't fill the screen.
+* Reboot, you should end up logged into a terminal session
+* `sudo apt-get update` and `sudo apt-get upgrade`
+* Make sure the following packages are installed:
+    * `sudo apt-get install --no-install-recommends xserver-xorg x11-xserver-utils xinit openbox chromium-browser`
+* Configure openbox:
+``` # Disable any form of screen saver / screen blanking / power management
+xset s off
+xset s noblank
+xset -dpms
 
-#### Einrichten eines KVV-Infomonitors mit Chromium
-* Chromium installieren: `sudo apt-get install chromium-browser`
-* Chromium automatisch starten: `nano .config/autostart/Chromium KVV-Info.desktop`
-```bash
-[Desktop Entry]
-Encoding=UTF-8
-Version=0.9.4
-Type=Application
-Name=Chromium KVV-Info
-Comment=
-Exec=/usr/bin/chromium-browser --password-store=basic --incognito --no-first-run --touch-events=enabled --fast --fast-start --disable-popup-blocking --disable-infobars --disable-session-crashed-bubble --disable-tab-switcher --disable-translate --enable-low-res-tiling --kiosk 127.0.0.1:8080/kvv_table?station=de:8212:1
-OnlyShowIn=XFCE;
-StartupNotify=false
-Terminal=false
-Hidden=false
+# Allow quitting the X server with CTRL-ATL-Backspace
+setxkbmap -option terminate:ctrl_alt_bksp
+
+# Start Chromium in kiosk mode
+sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' ~/.config/chromium/'Local State'
+sed -i 's/"exited_cleanly":false/"exited_cleanly":true/; s/"exit_type":"[^"]\+"/"exit_type":"Normal"/' ~/.config/chromium/Default/Preferences
+chromium-browser --disable-infobars --kiosk 'http://localhost:8088'
 ```
-## Bilder
-#### Suchen von Stationen
-![kvv_search](https://github.com/fablab-ka/kvvliveapi/blob/master/docs/kvv_search.png)
-#### Anzeigen der Abfahrtszeiten
-![kvv_table](https://github.com/fablab-ka/kvvliveapi/blob/master/docs/kvv_table.png)
-=======
-# kvvliveapi
+* Running `run_kioskmode.sh` should start openbox and load the app in chromium.
+* When using the full version of Raspbian, you may need to set it up to start openbox: `echo "exec openbox-session" > ~/.xinitrc`. This may prevent your normal desktop environment from loading. Really, its best to use Raspbian Lite anyways.
+* Quit with Ctrl-Alt-Backspace.
 
-`pip install kvvliveapi`
+## Screenshots
+#### Displaying the departure times
+[](https://github.com/fablab-ka/kvvliveapi/blob/master/docs/kvv_table.png)
+
+(Above picture is from fablab-ka/kvvliveapi)
+
+
+
+# API Dokumentation
 
 Python Bindings für die API, die von der KVV Live Webapp benutzt wird.
 
-Wenn jemand bindings für andere Sprachen schreiben will: hier die Dokumentation der API. Andere bindings würde ich auch gerne hier verlinken :)
+Install: `pip install kvvliveapi`
 
-Andere Sprachen und Anwendungen:
-
-* [Bindings für PHP](https://github.com/MartinLoeper/KVV-PHP-unofficial-)
-* [Bindings für Rust](https://github.com/nervengift/kvvliveapi-rs) (auch von mir)
-* [Bindings für Ruby](https://github.com/julianschuh/kvvliveapi)
-* [Eine Shopify Dashing Beispielumsetzung](https://github.com/anthu/kvv-departure-dashboard)
-* [Ein Modul für den MagicMirror²](https://github.com/yo-less/MMM-KVV)
-
-# API Dokumentation
 
 Für jeden Request muss der API-Key als GET-Parameter *key* mit übergeben werden. Der Schüssel ist 377d840e54b59adbe53608ba1aad70e8
 
