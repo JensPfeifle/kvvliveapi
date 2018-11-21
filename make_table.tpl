@@ -5,8 +5,7 @@
 </head>
 <meta http-equiv="refresh" content="30" >
 <body style="background-color:black;color:white;font-family:helvetica,sans-serif" >
-<h1>{{time}} </h1>
-<h1>  Abfahrtszeiten {{station1}}</h1>
+<h1>{{time}}  Abfahrtszeiten {{station1}}</h1>
 <table border="0" rules="rows" cellspacing="10px" width="100%">
 %for row in rows1:
   <tr>
@@ -24,7 +23,7 @@
   </tr>
 %end
 </table>
-<h1>  Abfahrtszeiten {{station2}}</h1>
+<h1>{{time}}  Abfahrtszeiten {{station2}}</h1>
 <table border="0" rules="rows" cellspacing="10px" width="100%">
 %for row in rows2:
   <tr>
