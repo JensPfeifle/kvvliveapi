@@ -5,49 +5,32 @@ from bottle import Bottle, route, run, debug, template, static_file, request
 app = Bottle()
 print("starting!")
 
-@app.get('/kvv_search')
-@app.get('/')
-def kvv_search():
-    formInfo = request.params
-    if 'search_for' in formInfo and formInfo['search_for'] != "":
-        stationList = kvvliveapi.search_by_name(formInfo['search_for'])
-    else:
-        stationList = None
-
-
-    return template('search_stations', stations=stationList)
-
-
 @app.route('/kvv_table')
+@app.get('/')
 def kvv_table():
-    try:
-        payload = request.params
 
-        #setup parameters from payload
-        if 'station' in payload:
-            stationId = payload['station']
-        else :
-            stationId = 'de:8212:7' #Tullastrasse / VBK
-        if 'entries' in payload:
-            maxLines = payload['entries']
-        else:
-            maxLines = 10
+    stationId = 'de:8212:2' #Kronenplatz Kaiserstr
+    station2Id = 'de:8212:80' # Kronenplatz Fritz-Erler Str
+    maxLines = 10
 
-        #get station
-        stationList = kvvliveapi.search_by_stop_id(stationId)
-        if len(stationList) == 0:
-            return "Station " + str(stationId) + " was not found!"
-        station = stationList[0]
+    #get station
+    stationList = kvvliveapi.search_by_stop_id(stationId)
+    if len(stationList) == 0:
+        return "Station " + str(stationId) + " was not found!"
+    station1 = stationList[0]
+    departures1 = kvvliveapi.get_departures(station1.stop_id, max_info=maxLines)
+    departures1 = [dep for dep in departures1 if dep.route != 'E'] #filter out stuff
 
-        #get departures
-        departures = kvvliveapi.get_departures(station.stop_id, max_info=maxLines)
-        departures = [dep for dep in departures if dep.route != 'E'] #filter out stuff
-        time = datetime.datetime.now().strftime("%H:%M")
+    stationList = kvvliveapi.search_by_stop_id(station2Id)
+    if len(stationList) == 0:
+        return "Station " + str(station2Id) + " was not found!"
+    station2 = stationList[0]
+    departures2 = kvvliveapi.get_departures(station2.stop_id, max_info=maxLines)
+    departures2 = [dep for dep in departures2 if dep.route != 'E'] #filter out stuff
 
-        return template('make_table', time=time, rows=departures, station=station.name)
-    except:
-        return template('make_table', time=datetime.datetime.now().strftime("%d.%m.%y %H:%M"),
-                        rows=[], station="Error!")
+    time = datetime.datetime.now().strftime("%H:%M")
+
+    return template('make_table', time=time, rows1=departures1, station1=station1.name, rows2=departures2, station2=station2.name)
 
 
 @app.route('/static/<filename>')
