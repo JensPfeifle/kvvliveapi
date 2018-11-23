@@ -44,10 +44,9 @@ chromium-browser --disable-infobars --kiosk 'http://localhost:8088'
 * Quit with Ctrl-Alt-Backspace.
 
 ## Screenshots
-#### Displaying the departure times
-[](https://github.com/fablab-ka/kvvliveapi/blob/master/docs/kvv_table.png)
+#### Displaying the departure times for Kronenplatz
+![kronenplatz](https://github.com/JensPfeifle/kvvliveapi/blob/develop/docs/kronenplatz.png)
 
-(Above picture is from fablab-ka/kvvliveapi)
 
 
 
