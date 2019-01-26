@@ -13,7 +13,7 @@ from datetime import datetime, timedelta
 import re
 import json
 import sys
-import time.time
+import time
 
 API_KEY = "377d840e54b59adbe53608ba1aad70e8"
 API_BASE = "https://live.kvv.de/webapp/"
