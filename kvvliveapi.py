@@ -4,9 +4,11 @@
 try:
     import urllib.request as _urllib
     from urllib.parse import quote_plus, urlencode
+    from urllib.error import URLError, HTTPError
 except ImportError:
     import urllib2 as _urllib
     from urllib import quote_plus, urlencode
+    from urllib.error import URLError, HTTPError
 from datetime import datetime, timedelta
 import re
 import json
@@ -129,17 +131,25 @@ def _query(path, params={}):
     url = API_BASE + path + "?" + urlencode(params)
     req = _urllib.Request(url)
 
-    # try:
-    handle = _urllib.urlopen(req)
-    # except IOError as e:
-    #    if hasattr(e, "code"):
-    #        if e.code != 403:
-    #            print("We got another error")
-    #            print(e.code)
-    #        else:
-    #            print(e.headers)
-    #            print(e.headers["www-authenticate"])
-    #    return None; #TODO: Schoenere Fehlerbehandlung
+    try:
+        handle = _urllib.urlopen(req)
+    except URLError as e:
+        if hasattr(e, "reason"):
+            print("URLError")
+            print(e.reason)
+            return None
+    except HTTPError as e:
+        if hasattr(e, "reason"):
+            print("HTTPError")
+            print(e.code, e.reason)
+        if hasattr(e, "code"):
+            if e.code != 403:
+                print("403")
+                print(e.code)
+            else:
+                print(e.headers)
+                print(e.headers["www-authenticate"])
+        return None  # TODO: Schoenere Fehlerbehandlung
 
     return json.loads(handle.read().decode("utf8"))
 
