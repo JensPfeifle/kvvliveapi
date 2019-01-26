@@ -13,6 +13,7 @@ from datetime import datetime, timedelta
 import re
 import json
 import sys
+import time.time
 
 API_KEY = "377d840e54b59adbe53608ba1aad70e8"
 API_BASE = "https://live.kvv.de/webapp/"
@@ -131,25 +132,32 @@ def _query(path, params={}):
     url = API_BASE + path + "?" + urlencode(params)
     req = _urllib.Request(url)
 
-    try:
-        handle = _urllib.urlopen(req)
-    except URLError as e:
-        if hasattr(e, "reason"):
-            print("URLError")
-            print(e.reason)
-            return None
-    except HTTPError as e:
-        if hasattr(e, "reason"):
-            print("HTTPError")
-            print(e.code, e.reason)
-        if hasattr(e, "code"):
-            if e.code != 403:
-                print("403")
-                print(e.code)
-            else:
-                print(e.headers)
-                print(e.headers["www-authenticate"])
-        return None  # TODO: Schoenere Fehlerbehandlung
+    attempts = 0
+    max_attempts = 3
+    while attempts < max_attempts:
+        try:
+            handle = _urllib.urlopen(req)
+            break
+        except URLError as e:
+            attempts += 1
+            time.sleep(60)
+            continue
+    #    if hasattr(e, "reason"):
+    #        print("URLError")
+    #        print(e.reason)
+    #        return None
+        # except HTTPError as e:
+        #     if hasattr(e, "reason"):
+        #         print("HTTPError")
+        #         print(e.code, e.reason)
+        #     if hasattr(e, "code"):
+        #         if e.code != 403:
+        #             print("403")
+        #             print(e.code)
+        #         else:
+        #             print(e.headers)
+        #             print(e.headers["www-authenticate"])
+        #     return None  # TODO: Schoenere Fehlerbehandlung
 
     return json.loads(handle.read().decode("utf8"))
 
