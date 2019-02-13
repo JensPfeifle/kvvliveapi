@@ -1,6 +1,8 @@
 # KVV Abfahrtsmonitor
 forked from https://github.com/fablab-ka/kvvliveapi which is based on https://github.com/Nervengift/kvvliveapi
 
+![Travis-Badge](https://travis-ci.com/JensPfeifle/kvvliveapi.svg?branch=master)
+
 Shows the departure times of KVV-trams. By default, the two stations Kronenplatz (Kaiserstr.) and Kronenplatz (Fritz-Erler-Str.) are watched.
 
 ## Installation (Linux/Ubuntu/Raspbian)
