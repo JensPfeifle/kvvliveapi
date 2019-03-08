@@ -9,6 +9,7 @@ services:
     - docker
 
 install:
+   - pip install -r requirements.txt
    - docker build -t kvvliveapi .
    - docker run -d -p 127.0.0.1:80:80 --name kvvliveapi kvvliveapi
 
