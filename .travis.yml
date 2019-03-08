@@ -4,5 +4,7 @@ python:
   - "3.7-dev"
 
 script: 
-    - pycodestyle
+    - pycodestyle app.py
+    - pycodestyle kvvliveapi.py
+    - pycodestyle tests.py
     - python ./tests.py
