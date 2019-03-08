@@ -37,7 +37,8 @@ class Stop:
 
 
 class Departure:
-    def __init__(self, route, destination, direction, time, lowfloor, realtime, traction, stopPosition):
+    def __init__(self, route, destination, direction, time,
+                 lowfloor, realtime, traction, stopPosition):
         self.route = route
         self.destination = destination
         self.direction = direction
@@ -76,7 +77,10 @@ class Departure:
             return "000000"
 
     def _str_to_time(self, timestr):
-        """ _str_to_time converts a time string as given in the API response to da datetime.datetime """
+        """
+        _str_to_time converts a time string as given
+        in the API response to da datetime.datetime
+        """
         time = datetime.now()
 
         # "0" ("sofort")
@@ -107,11 +111,16 @@ class Departure:
         time = json["time"]
         if time == "0":
             time = "sofort"
-        return Departure(json["route"], json["destination"], json["direction"], time, json["lowfloor"], json["realtime"], json["traction"], json["stopPosition"])
+        return Departure(json["route"], json["destination"],
+                         json["direction"], time,
+                         json["lowfloor"], json["realtime"],
+                         json["traction"], json["stopPosition"])
 
     def pretty_format(self, alwaysrelative=False):
         # TODO check
-        return self.pretty_time(alwaysrelative) + self.route + " " + self.destination
+        return "{}{} {}".format(self.pretty_time(alwaysrelative),
+                                self.route,
+                                self.destination)
 
     def pretty_time(self, alwaysrelative=False):
         if alwaysrelative and self.timestr != "sofort":
@@ -203,16 +212,17 @@ def _get_departures(query, max_info=10):
 
 def get_departures(stop_id, max_info=10):
     """ Return a list of Departure objects for a given stop stop_id
-        optionally set the maximum number of entries 
+        optionally set the maximum number of entries
     """
-    return _get_departures("departures/bystop/" + stop_id, max_info)
+    return _get_departures("departures/bystop/{}".format(stop_id), max_info)
 
 
 def get_departures_by_route(stop_id, route, max_info=10):
     """ Return a list of Departure objects for a given stop stop_id and route
-        optionally set the maximum number of entries 
+        optionally set the maximum number of entries
     """
-    return _get_departures("departures/byroute/" + route + "/" + stop_id, max_info)
+    return _get_departures("departures/byroute/{}/{}".format(route, stop_id),
+                           max_info)
 
 
 def _errorstring(e):
@@ -242,7 +252,8 @@ if __name__ == "__main__":
             for dep in get_departures_by_route(sys.argv[2], sys.argv[3]):
                 print(dep.pretty_format())
         else:
-            print(
-                "No such command. Try \"search <name>/<stop_id>/<lat> <lon>\" or \"departures <stop stop_id> [<route>]\"")
+            print("No such command. ",
+                  "Try \"search <name>/<stop_id>/<lat> <lon>\" ",
+                  "or \"departures <stop stop_id> [<route>]\"")
     except IOError as e:
         sys.stderr.write("{}\n".format(_errorstring(e)))
