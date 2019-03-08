@@ -8,7 +8,7 @@ try:
 except ImportError:
     import urllib2 as _urllib
     from urllib import quote_plus, urlencode
-    from urllib.error import URLError, HTTPError
+    from urllib2 import URLError, HTTPError
 from datetime import datetime, timedelta
 import re
 import json
