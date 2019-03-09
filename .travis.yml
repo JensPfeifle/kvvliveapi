@@ -5,8 +5,17 @@ python:
   - "3.6"
   - "3.7-dev"
 
+services:
+    - docker
+
+install:
+   - pip install -r requirements.txt
+   - docker build -t kvvliveapi .
+   - docker run -d -p 127.0.0.1:80:80 --name kvvliveapi kvvliveapi
+
 script: 
     - pycodestyle app.py
     - pycodestyle kvvliveapi.py
     - pycodestyle tests.py
     - python ./tests.py
+    - docker ps | grep -q kvvliveapi

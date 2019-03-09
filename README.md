@@ -1,7 +1,7 @@
 # KVV Abfahrtsmonitor
 forked from https://github.com/fablab-ka/kvvliveapi which is based on https://github.com/Nervengift/kvvliveapi
 
-![Travis-Badge](https://travis-ci.com/JensPfeifle/kvvliveapi.svg?branch=master)
+[![Travis-Badge](https://travis-ci.com/JensPfeifle/kvvliveapi.svg?branch=master)](https://travis-ci.com/JensPfeifle/kvvliveapi)
 
 Shows the departure times of KVV-trams. By default, the two stations Kronenplatz (Kaiserstr.) and Kronenplatz (Fritz-Erler-Str.) are watched.
 
@@ -13,7 +13,10 @@ Shows the departure times of KVV-trams. By default, the two stations Kronenplatz
 * Never miss your train again (if you need to get on at Kronenplatz...)
 
 ## Installation (Docker)
-* FIXME
+* Build image with `docker build -t kvvliveapi .` (the period is important!).
+* Start the container with `docker run -p 80:8088 --name kvvliveapi kvvliveapi`.
+* You can change port `80` to whatever you'd like.
+
   
 ## Setup a Rapsberry Pi to run in kiosk mode
 * Start with Raspbian or Raspbian Lite
