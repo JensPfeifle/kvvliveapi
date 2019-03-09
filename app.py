@@ -20,8 +20,8 @@ def kvv_table():
         station1.stop_id, max_info=maxLines)
     # filter out stuff
     departures1 = [dep for dep in departures1 if dep.route != 'E']
-    departures11 = [dep for dep in departures1 if dep.stopPosition == '1']
-    departures12 = [dep for dep in departures1 if dep.stopPosition == '2']
+    departures11 = [dep for dep in departures1 if dep.direction == '1']
+    departures12 = [dep for dep in departures1 if dep.direction == '2']
 
     # station 2
     station2 = kvvliveapi.search_by_stop_id(station2Id)[0]
@@ -29,8 +29,8 @@ def kvv_table():
         station2.stop_id, max_info=maxLines)
     # filter out stuff
     departures2 = [dep for dep in departures2 if dep.route != 'E']
-    departures21 = [dep for dep in departures2 if dep.stopPosition == '1']
-    departures22 = [dep for dep in departures2 if dep.stopPosition == '2']
+    departures21 = [dep for dep in departures2 if dep.direction == '1']
+    departures22 = [dep for dep in departures2 if dep.direction == '2']
 
     time = datetime.datetime.now().strftime("%H:%M")
 

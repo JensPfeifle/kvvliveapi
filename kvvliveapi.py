@@ -38,7 +38,7 @@ class Stop:
 
 class Departure:
     def __init__(self, route, destination, direction, time,
-                 lowfloor, realtime, traction, stopPosition):
+                 lowfloor, realtime, traction):
         self.route = route
         self.destination = destination
         self.direction = direction
@@ -47,7 +47,6 @@ class Departure:
         self.realtime = realtime
         self.traction = traction
         self.time = self._str_to_time(time)
-        self.stopPosition = stopPosition
         self.route_color = self.assign_color(route)
 
     def assign_color(self, route):
@@ -114,7 +113,7 @@ class Departure:
         return Departure(json["route"], json["destination"],
                          json["direction"], time,
                          json["lowfloor"], json["realtime"],
-                         json["traction"], json["stopPosition"])
+                         json["traction"])
 
     def pretty_format(self, alwaysrelative=False):
         # TODO check
